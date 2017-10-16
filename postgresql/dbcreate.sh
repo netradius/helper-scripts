@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="1"
+VERSION="2"
 
 ### This script makes an assumption that you have a local .pgpass file which will allow
 ### psql and pg_restore to connect to the database server you are attempting to create
@@ -66,9 +66,6 @@ if [ -z ${PORT} ]; then
 	PORT="5432"
 fi
 
-# Exit on error
-set -e
-
 # Error on unset variables
 set -u
 
@@ -76,6 +73,8 @@ set -u
 psql -U postgres -c "drop database ${DB}"
 psql -U postgres -c "drop user ${USER}"
 
+# Exit on error
+set -e
 
 # Create the user and database and setup permissions
 psql -U postgres -c "create user ${USER} with encrypted password '${PASSWORD}' nocreatedb nocreateuser"
